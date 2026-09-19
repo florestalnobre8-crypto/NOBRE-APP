@@ -1,0 +1,10 @@
+NOBRE — base mobile Android/iOS
+
+- Nome exibido: NOBRE
+- Logo nova incluída como ícone
+- Todas as abas e informações da versão mobile aprovada foram preservadas
+- Controles de planilha continuam ocultos no celular
+- Cache/últimos dados preservados pelo próprio app
+- Manifesto PWA e ícones Android/iOS incluídos
+
+Esta pasta é a base instalável/web-app. Para gerar APK/AAB nativo é necessário compilar em ambiente Android (Android SDK/Gradle). Para iOS é necessário Xcode e assinatura Apple.
