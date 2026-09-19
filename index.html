@@ -91,7 +91,7 @@ table{border-collapse:separate;border-spacing:0;width:100%;overflow:hidden;borde
  body{padding-bottom:74px!important} header{position:sticky;top:0;z-index:60;padding:10px 12px!important;background:#04192e!important} header h1{font-size:18px!important;text-align:center;margin:0!important} #status{font-size:10px!important;right:8px!important;bottom:72px!important;max-width:75vw!important}
  main{padding:10px!important}.page{overflow:visible!important}.section{font-size:16px!important;padding:10px 12px!important;margin-top:10px!important}.card{padding:11px!important;min-width:0!important}.label{font-size:11px!important}.value{font-size:23px!important}.small{font-size:11px!important}
  .grid,.geral-kpis{grid-template-columns:repeat(2,minmax(0,1fr))!important;gap:8px!important}.acc-grid,.podium-wrap{grid-template-columns:1fr!important}
- nav{position:fixed!important;left:0;right:0;bottom:0;z-index:9999;padding:6px 4px max(6px,env(safe-area-inset-bottom))!important;display:grid!important;grid-template-columns:repeat(5,1fr)!important;gap:3px!important;background:#031525!important;border-top:1px solid #155476!important;overflow:visible!important}
+ nav{position:fixed!important;left:0;right:0;top:auto!important;bottom:0;height:auto!important;z-index:9999;padding:6px 4px max(6px,env(safe-area-inset-bottom))!important;display:grid!important;grid-template-columns:repeat(5,1fr)!important;gap:3px!important;background:#031525!important;border-top:1px solid #155476!important;overflow:visible!important}
  nav button{padding:7px 2px!important;font-size:9px!important;line-height:1.15!important;white-space:normal!important;min-width:0!important;border-radius:8px!important}
  .upload,.sync-approved,.desktop-only{display:none!important}
  table{font-size:11px!important;min-width:620px}.tablewrap,.table-wrap,.scroll,.chart-scroll{overflow-x:auto!important;-webkit-overflow-scrolling:touch!important}.chart-scroll svg{min-width:700px!important}
@@ -99,8 +99,46 @@ table{border-collapse:separate;border-spacing:0;width:100%;overflow:hidden;borde
 }
 @media(max-width:420px){.grid,.geral-kpis{grid-template-columns:1fr 1fr!important}.value{font-size:21px!important}.card{padding:9px!important}}
 </style>
+
+<style id="nobre-bottom-nav-always-fixed">
+/* Correção mobile: a navegação permanece fixa também nas páginas longas SKIDER e ROMANEIO. */
+@media(max-width:800px){
+  html,body{min-height:100%!important;overflow-x:hidden!important;}
+  body{padding-bottom:calc(68px + env(safe-area-inset-bottom))!important;}
+  body > nav,
+  nav{
+    position:fixed!important;
+    position:-webkit-fixed!important;
+    left:0!important;
+    right:0!important;
+    bottom:0!important;
+    top:auto!important;
+    width:100%!important;
+    margin:0!important;
+    transform:none!important;
+    -webkit-transform:none!important;
+    z-index:2147483000!important;
+  }
+  #skider,#romaneio{padding-bottom:12px!important;transform:none!important;-webkit-transform:none!important;}
+}
+</style>
+
+<style id="nobre-native-mobile-fix">
+@media(max-width:800px){
+  nav{top:auto!important;height:auto!important;min-height:0!important;align-items:center!important;}
+  nav button{height:auto!important;min-height:48px!important;}
+  header h1{display:flex!important;align-items:center!important;justify-content:center!important;gap:8px!important;}
+  header h1::before{content:"";display:inline-block;width:30px;height:30px;background:url("logo-nobre.png") center/contain no-repeat;border-radius:50%;}
+}
+#nobreSplash{position:fixed;inset:0;z-index:20000;background:linear-gradient(180deg,#04192e,#03111e);display:flex;flex-direction:column;align-items:center;justify-content:center;padding:28px;transition:opacity .35s ease;pointer-events:none}
+#nobreSplash img{width:min(72vw,320px);height:auto;border-radius:24px;box-shadow:0 12px 40px rgba(0,0,0,.38)}
+#nobreSplash b{font-size:30px;letter-spacing:4px;margin-top:20px;color:#fff}
+#nobreSplash small{margin-top:8px;color:#9fd8b2;font-size:13px;letter-spacing:1px}
+#nobreSplash.hide{opacity:0}
+</style>
 </head>
 <body>
+<div id="nobreSplash"><img src="logo-nobre.png" alt="NOBRE"><b>NOBRE</b><small>Carregando últimos dados salvos...</small></div>
 <header>
 <h1>🌲 PAINEL FLORESTAL</h1>
 <div class="sub" id="status">Carregue o Excel para iniciar.</div>
@@ -793,6 +831,14 @@ window.addEventListener("DOMContentLoaded",async()=>{
    document.title='NOBRE';
  }
  if(document.readyState==='loading') document.addEventListener('DOMContentLoaded',mobileBrand); else mobileBrand();
+})();
+</script>
+
+<script>
+(function(){
+  function closeSplash(){var x=document.getElementById('nobreSplash');if(!x)return;x.classList.add('hide');setTimeout(function(){x.remove()},380)}
+  if(document.readyState==='complete') setTimeout(closeSplash,650); else window.addEventListener('load',function(){setTimeout(closeSplash,650)});
+  setTimeout(closeSplash,1800);
 })();
 </script>
 </body>
