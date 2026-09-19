@@ -1,10 +1,12 @@
-NOBRE — base mobile Android/iOS
+NOBRE — PROJETO ANDROID
 
-- Nome exibido: NOBRE
-- Logo nova incluída como ícone
-- Todas as abas e informações da versão mobile aprovada foram preservadas
-- Controles de planilha continuam ocultos no celular
-- Cache/últimos dados preservados pelo próprio app
-- Manifesto PWA e ícones Android/iOS incluídos
+Este pacote já contém:
+- app Android em tela cheia
+- painel mobile em app/src/main/assets/index.html
+- nome do aplicativo: NOBRE
+- cache/localStorage do WebView preservado entre aberturas
+- workflow GitHub Actions para gerar NOBRE.apk
 
-Esta pasta é a base instalável/web-app. Para gerar APK/AAB nativo é necessário compilar em ambiente Android (Android SDK/Gradle). Para iOS é necessário Xcode e assinatura Apple.
+No GitHub, envie TODO o conteúdo deste pacote para a raiz do repositório NOBRE-APP.
+Depois abra Actions > Gerar APK NOBRE e aguarde a compilação.
+O APK ficará em Artifacts > NOBRE-APK.
