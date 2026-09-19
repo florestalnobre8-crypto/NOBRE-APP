@@ -79,6 +79,15 @@ table{border-collapse:separate;border-spacing:0;width:100%;overflow:hidden;borde
 #status{position:fixed!important;right:18px!important;bottom:14px!important;top:auto!important;left:auto!important;z-index:9999!important;width:auto!important;max-width:520px!important;margin:0!important;padding:8px 13px!important;border:1px solid #17638a!important;border-radius:9px!important;background:#06223a!important;box-shadow:0 4px 16px rgba(0,0,0,.28)!important;font-size:12px!important;line-height:1.25!important;color:#bfe6ff!important;}
 #status:empty{display:none!important;}
 </style>
+<style id="nobre-mobile-final">
+@media(max-width:800px){
+body{padding-bottom:76px!important}
+nav{position:fixed!important;left:0!important;right:0!important;bottom:0!important;top:auto!important;z-index:99999!important;display:grid!important;grid-template-columns:repeat(5,minmax(0,1fr))!important;gap:3px!important;padding:6px 4px max(6px,env(safe-area-inset-bottom))!important;background:#031525!important;border-top:1px solid #155476!important;border-bottom:0!important;overflow:visible!important;white-space:normal!important}
+nav button{min-width:0!important;width:100%!important;padding:8px 1px!important;margin:0!important;font-size:9px!important;line-height:1.15!important;border-radius:8px!important;white-space:normal!important}
+.upload,.sync-approved,.desktop-only,#status,header .sub{display:none!important}
+#romaneio .rom-rank-table th,#romaneio .rom-rank-table td,#romaneio .rom-rank-table .rom-total td{font-size:15px!important;line-height:1.25!important}
+#romaneio .rom-rank-table .rom-total td{font-weight:900!important}
+}</style>
 </head>
 <body>
 <header>
@@ -781,6 +790,11 @@ window.addEventListener("DOMContentLoaded",async()=>{
  if(geral&&!document.querySelector('.sync-approved')){const d=document.createElement('div');d.className='sync-approved desktop-only';d.innerHTML='<b>☁️ SINCRONIZAÇÃO PC → CELULAR</b><div class="small" style="margin:7px">Servidor NOBRE configurado. Ao carregar uma planilha nova, os dados serão enviados automaticamente para os celulares.</div><div class="small ok">✓ SINCRONIZAÇÃO NOBRE ATIVA</div>';geral.appendChild(d);}
  const unwanted=document.getElementById('ddDetails'); if(unwanted){const bar=unwanted.previousElementSibling;if(bar)bar.remove();unwanted.remove();}
 })();
+</script>
+<script id="nobre-mobile-sync-final">
+const NOBRE_MOBILE_SYNC_URL='https://script.google.com/macros/s/AKfycbwNTe5rQdMcr60gQ5yim85pWPOtKnJGz2XZpknTE8ZrfO9YDr_76sz2bYV9MdSsxf8Z/exec';let nobreMobileSyncBusy=false;
+async function nobreMobileSyncFinal(){if(nobreMobileSyncBusy||!navigator.onLine)return;nobreMobileSyncBusy=true;try{const r=await fetch(NOBRE_MOBILE_SYNC_URL+'?_='+Date.now(),{cache:'no-store',redirect:'follow'});const p=await r.json();if(!p||p.ok!==true||p.temDados!==true||!p.dados)return;const v=String(p.versao||p.atualizadoEm||'');if(v&&localStorage.getItem('nobre_mobile_server_version')===v)return;Object.keys(S).forEach(k=>delete S[k]);Object.assign(S,p.dados);update();try{saveFastSnapshot()}catch(e){}try{localStorage.setItem('nobre_last_sheets',JSON.stringify(S));localStorage.setItem('nobre_mobile_server_version',v)}catch(e){}try{await idbPut('sheets',S)}catch(e){}}catch(e){}finally{nobreMobileSyncBusy=false}}
+window.addEventListener('DOMContentLoaded',()=>setTimeout(nobreMobileSyncFinal,800));window.addEventListener('online',nobreMobileSyncFinal);document.addEventListener('visibilitychange',()=>{if(!document.hidden)nobreMobileSyncFinal()});setInterval(nobreMobileSyncFinal,60000);
 </script>
 </body>
 </html>
