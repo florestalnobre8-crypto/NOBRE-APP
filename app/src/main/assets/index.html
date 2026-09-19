@@ -3,14 +3,8 @@
 <head>
 
 <meta charset="utf-8">
-<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
-<meta name="theme-color" content="#061224">
-<meta name="apple-mobile-web-app-capable" content="yes">
-<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
-<meta name="apple-mobile-web-app-title" content="NOBRE">
-<link rel="manifest" href="manifest.webmanifest">
-<link rel="apple-touch-icon" href="icons/icon-180.png">
-<title>NOBRE</title>
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>PAINEL FLORESTAL</title>
 <style>
 *{box-sizing:border-box}body{margin:0;background:#071426;color:#eef5ff;font-family:Arial,sans-serif}
 header{padding:18px 24px;background:#0b1d33;border-bottom:1px solid #29415d}
@@ -85,37 +79,8 @@ table{border-collapse:separate;border-spacing:0;width:100%;overflow:hidden;borde
 #status{position:fixed!important;right:18px!important;bottom:14px!important;top:auto!important;left:auto!important;z-index:9999!important;width:auto!important;max-width:520px!important;margin:0!important;padding:8px 13px!important;border:1px solid #17638a!important;border-radius:9px!important;background:#06223a!important;box-shadow:0 4px 16px rgba(0,0,0,.28)!important;font-size:12px!important;line-height:1.25!important;color:#bfe6ff!important;}
 #status:empty{display:none!important;}
 </style>
-
-<style id="nobre-mobile-app">
-@media(max-width:800px){
- body{padding-bottom:74px!important} header{position:sticky;top:0;z-index:60;padding:10px 12px!important;background:#04192e!important} header h1{font-size:18px!important;text-align:center;margin:0!important} #status{font-size:10px!important;right:8px!important;bottom:72px!important;max-width:75vw!important}
- main{padding:10px!important}.page{overflow:visible!important}.section{font-size:16px!important;padding:10px 12px!important;margin-top:10px!important}.card{padding:11px!important;min-width:0!important}.label{font-size:11px!important}.value{font-size:23px!important}.small{font-size:11px!important}
- .grid,.geral-kpis{grid-template-columns:repeat(2,minmax(0,1fr))!important;gap:8px!important}.acc-grid,.podium-wrap{grid-template-columns:1fr!important}
- nav{position:fixed!important;left:0;right:0;top:auto!important;bottom:0;height:auto!important;z-index:9999;padding:6px 4px max(6px,env(safe-area-inset-bottom))!important;display:grid!important;grid-template-columns:repeat(5,1fr)!important;gap:3px!important;background:#031525!important;border-top:1px solid #155476!important;overflow:visible!important}
- nav button{padding:7px 2px!important;font-size:9px!important;line-height:1.15!important;white-space:normal!important;min-width:0!important;border-radius:8px!important}
- .upload,.sync-approved,.desktop-only{display:none!important}
- table{font-size:11px!important;min-width:620px}.tablewrap,.table-wrap,.scroll,.chart-scroll{overflow-x:auto!important;-webkit-overflow-scrolling:touch!important}.chart-scroll svg{min-width:700px!important}
- #romaneio table,#motorista table{min-width:700px}img,svg{max-width:100%}
-}
-@media(max-width:420px){.grid,.geral-kpis{grid-template-columns:1fr 1fr!important}.value{font-size:21px!important}.card{padding:9px!important}}
-</style>
-
-<style id="nobre-native-mobile-fix">
-@media(max-width:800px){
-  nav{top:auto!important;height:auto!important;min-height:0!important;align-items:center!important;}
-  nav button{height:auto!important;min-height:48px!important;}
-  header h1{display:flex!important;align-items:center!important;justify-content:center!important;gap:8px!important;}
-  header h1::before{content:"";display:inline-block;width:30px;height:30px;background:url("logo-nobre.png") center/contain no-repeat;border-radius:50%;}
-}
-#nobreSplash{position:fixed;inset:0;z-index:20000;background:linear-gradient(180deg,#04192e,#03111e);display:flex;flex-direction:column;align-items:center;justify-content:center;padding:28px;transition:opacity .35s ease;pointer-events:none}
-#nobreSplash img{width:min(72vw,320px);height:auto;border-radius:24px;box-shadow:0 12px 40px rgba(0,0,0,.38)}
-#nobreSplash b{font-size:30px;letter-spacing:4px;margin-top:20px;color:#fff}
-#nobreSplash small{margin-top:8px;color:#9fd8b2;font-size:13px;letter-spacing:1px}
-#nobreSplash.hide{opacity:0}
-</style>
 </head>
 <body>
-<div id="nobreSplash"><img src="logo-nobre.png" alt="NOBRE"><b>NOBRE</b><small>Carregando últimos dados salvos...</small></div>
 <header>
 <h1>🌲 PAINEL FLORESTAL</h1>
 <div class="sub" id="status">Carregue o Excel para iniciar.</div>
@@ -734,6 +699,21 @@ function restoreFastSnapshot(){
     return ok;
   }catch(e){return false}
 }
+const NOBRE_SYNC_URL='https://script.google.com/macros/s/AKfycbwNTe5rQdMcr60gQ5yim85pWPOtKnJGz2XZpknTE8ZrfO9YDr_76sz2bYV9MdSsxf8Z/exec';
+
+async function enviarNobreParaServidor(dados){
+  const payload=JSON.stringify({dados});
+  // text/plain evita preflight/CORS ao abrir o HTML diretamente no Windows.
+  await fetch(NOBRE_SYNC_URL,{
+    method:"POST",
+    mode:"no-cors",
+    headers:{"Content-Type":"text/plain;charset=utf-8"},
+    body:payload
+  });
+  localStorage.setItem("nobre_last_sync",new Date().toISOString());
+  return true;
+}
+
 async function handleExcel(file){
   if(!file)return;
   const st=E("status"); if(st) st.textContent="1/3 — Lendo o arquivo Excel...";
@@ -744,8 +724,11 @@ async function handleExcel(file){
     if(st) st.textContent="3/3 — Salvando a última planilha...";
     try{localStorage.setItem("nobre_last_sheets",JSON.stringify(S));localStorage.setItem("nobre_last_meta",JSON.stringify({name:file.name,at:new Date().toISOString()}))}catch(cacheErr){console.warn(cacheErr)}
     try{await idbPut("sheets",S);await idbPut("meta",{name:file.name,at:new Date().toISOString()})}catch(saveErr){console.warn(saveErr)}
+    if(st) st.textContent="4/4 — Enviando atualização para os celulares...";
+    let syncOk=false;
+    try{await enviarNobreParaServidor(S);syncOk=true}catch(syncErr){console.warn("Sincronização:",syncErr)}
     const realSheets=Object.keys(data).filter(k=>!['DERRUBA','SKIDER','ROMANEIO','MOTORISTA','CORTE NÃO EFETUADO','MOTORISTA_RANKING','VIAGENS'].includes(k));
-    if(st) st.innerHTML='<span class="ok">✓ Planilha carregada:</span> '+esc(file.name)+' — '+realSheets.length+' abas lidas';
+    if(st) st.innerHTML='<span class="ok">✓ Planilha carregada:</span> '+esc(file.name)+' — '+realSheets.length+' abas lidas'+(syncOk?' <span class="ok">• enviada para sincronização</span>':' <span class="warn">• não foi possível enviar ao servidor</span>');
     if(E("sheetStatus"))E("sheetStatus").textContent="Abas lidas: "+realSheets.join(" • ");
   }catch(err){console.error(err);if(st) st.innerHTML='<span class="warn">Erro ao ler a planilha:</span> '+esc(err?.message||String(err));}
 }
@@ -795,27 +778,8 @@ window.addEventListener("DOMContentLoaded",async()=>{
 (function(){
  const geral=document.getElementById('geral'), up=document.querySelector('.upload');
  if(geral&&up){geral.appendChild(up); up.classList.add('desktop-only');}
- if(geral&&!document.querySelector('.sync-approved')){const d=document.createElement('div');d.className='sync-approved desktop-only';d.innerHTML='<b>☁️ SINCRONIZAÇÃO PC → CELULAR</b><div class="small" style="margin:7px">Cole aqui o endereço do seu servidor de sincronização.</div><input id="syncUrlApproved" placeholder="Endereço do Google Apps Script"><button onclick="localStorage.setItem(\'upa13_sync_url\',document.getElementById(\'syncUrlApproved\').value);alert(\'Sincronização salva no computador.\')">Salvar sincronização</button>';geral.appendChild(d);const x=localStorage.getItem('upa13_sync_url');if(x)document.getElementById('syncUrlApproved').value=x;}
+ if(geral&&!document.querySelector('.sync-approved')){const d=document.createElement('div');d.className='sync-approved desktop-only';d.innerHTML='<b>☁️ SINCRONIZAÇÃO PC → CELULAR</b><div class="small" style="margin:7px">Servidor NOBRE configurado. Ao carregar uma planilha nova, os dados serão enviados automaticamente para os celulares.</div><div class="small ok">✓ SINCRONIZAÇÃO NOBRE ATIVA</div>';geral.appendChild(d);}
  const unwanted=document.getElementById('ddDetails'); if(unwanted){const bar=unwanted.previousElementSibling;if(bar)bar.remove();unwanted.remove();}
-})();
-</script>
-
-<script id="nobre-mobile-init">
-(function(){
- document.documentElement.classList.add('mobile-app');
- function mobileBrand(){
-   var h=document.querySelector('header h1'); if(h) h.textContent='🌲 NOBRE';
-   document.title='NOBRE';
- }
- if(document.readyState==='loading') document.addEventListener('DOMContentLoaded',mobileBrand); else mobileBrand();
-})();
-</script>
-
-<script>
-(function(){
-  function closeSplash(){var x=document.getElementById('nobreSplash');if(!x)return;x.classList.add('hide');setTimeout(function(){x.remove()},380)}
-  if(document.readyState==='complete') setTimeout(closeSplash,650); else window.addEventListener('load',function(){setTimeout(closeSplash,650)});
-  setTimeout(closeSplash,1800);
 })();
 </script>
 </body>
