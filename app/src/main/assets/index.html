@@ -1157,5 +1157,46 @@ window.addEventListener('DOMContentLoaded',()=>setTimeout(()=>nobreMobileSyncFin
 }
 </style>
 
+
+<style id="motorista-mobile-v9-numeros">
+@media(max-width:800px){
+  /* V9 — ajuste SOMENTE dos números em TOTAL GERAL POR MOTORISTA */
+  #motorista #mDriverGeral th:nth-child(1),#motorista #mDriverGeral td:nth-child(1){width:22%!important}
+  #motorista #mDriverGeral th:nth-child(2),#motorista #mDriverGeral td:nth-child(2){width:9%!important}
+  #motorista #mDriverGeral th:nth-child(3),#motorista #mDriverGeral td:nth-child(3){width:10%!important}
+  #motorista #mDriverGeral th:nth-child(4),#motorista #mDriverGeral td:nth-child(4){width:9%!important}
+  #motorista #mDriverGeral th:nth-child(5),#motorista #mDriverGeral td:nth-child(5){width:10%!important}
+  #motorista #mDriverGeral th:nth-child(6),#motorista #mDriverGeral td:nth-child(6){width:20%!important}
+  #motorista #mDriverGeral th:nth-child(7),#motorista #mDriverGeral td:nth-child(7){width:20%!important}
+
+  #motorista #mDriverGeral td:nth-child(2),
+  #motorista #mDriverGeral td:nth-child(3),
+  #motorista #mDriverGeral td:nth-child(4),
+  #motorista #mDriverGeral td:nth-child(5),
+  #motorista #mDriverGeral td:nth-child(6),
+  #motorista #mDriverGeral td:nth-child(7){
+    white-space:nowrap!important;
+    word-break:keep-all!important;
+    overflow-wrap:normal!important;
+    font-variant-numeric:tabular-nums!important;
+  }
+
+  #motorista #mDriverGeral td:nth-child(6),
+  #motorista #mDriverGeral td:nth-child(7){
+    font-size:9.4px!important;
+    letter-spacing:-0.15px!important;
+    padding-left:1px!important;
+    padding-right:1px!important;
+  }
+
+  #motorista #mDriverGeral tr:last-child td:nth-child(6),
+  #motorista #mDriverGeral tr:last-child td:nth-child(7){
+    font-size:9.2px!important;
+    white-space:nowrap!important;
+    letter-spacing:-0.2px!important;
+  }
+}
+</style>
+
 </body>
 </html>
