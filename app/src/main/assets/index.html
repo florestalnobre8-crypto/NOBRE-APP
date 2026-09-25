@@ -1198,5 +1198,38 @@ window.addEventListener('DOMContentLoaded',()=>setTimeout(()=>nobreMobileSyncFin
 }
 </style>
 
+
+<style id="motorista-mobile-v10-total-geral">
+@media(max-width:800px){
+  /* V10 — corrige SOMENTE a linha TOTAL GERAL da tabela por motorista */
+  #motorista #mDriverGeral tr:last-child td:first-child{
+    width:58%!important;
+    text-align:right!important;
+    padding:10px 8px 10px 2px!important;
+    white-space:nowrap!important;
+    font-size:10px!important;
+  }
+  #motorista #mDriverGeral tr:last-child td:nth-child(2),
+  #motorista #mDriverGeral tr:last-child td:nth-child(3){
+    width:21%!important;
+    min-width:0!important;
+    text-align:center!important;
+    padding:10px 4px!important;
+    white-space:nowrap!important;
+    word-break:keep-all!important;
+    overflow-wrap:normal!important;
+    font-size:9.2px!important;
+    line-height:1.15!important;
+    letter-spacing:-0.15px!important;
+    font-variant-numeric:tabular-nums!important;
+  }
+  #motorista #mDriverGeral tr:last-child td:nth-child(2){
+    border-left:1px solid #1b5877!important;
+  }
+  #motorista #mDriverGeral tr:last-child td:nth-child(3){
+    border-left:1px solid #1b5877!important;
+  }
+}
+</style>
 </body>
 </html>
