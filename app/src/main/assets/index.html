@@ -1278,5 +1278,111 @@ window.addEventListener('DOMContentLoaded',()=>setTimeout(()=>nobreMobileSyncFin
   }
 }
 </style>
+
+<style id="motorista-mobile-v12-final">
+@media(max-width:800px){
+  /* V12: cabeçalho sem textos embolados */
+  #motorista #mDriverGeral th{
+    font-size:7.8px!important;
+    line-height:1.02!important;
+    padding:9px 2px!important;
+    white-space:normal!important;
+    overflow-wrap:break-word!important;
+    word-break:normal!important;
+    vertical-align:middle!important;
+    text-align:center!important;
+  }
+  #motorista #mDriverGeral th:nth-child(1),#motorista #mDriverGeral td:nth-child(1){width:28%!important}
+  #motorista #mDriverGeral th:nth-child(2),#motorista #mDriverGeral td:nth-child(2){width:9%!important}
+  #motorista #mDriverGeral th:nth-child(3),#motorista #mDriverGeral td:nth-child(3){width:10%!important}
+  #motorista #mDriverGeral th:nth-child(4),#motorista #mDriverGeral td:nth-child(4){width:9%!important}
+  #motorista #mDriverGeral th:nth-child(5),#motorista #mDriverGeral td:nth-child(5){width:10%!important}
+  #motorista #mDriverGeral th:nth-child(6),#motorista #mDriverGeral td:nth-child(6){width:17%!important}
+  #motorista #mDriverGeral th:nth-child(7),#motorista #mDriverGeral td:nth-child(7){width:17%!important}
+
+  /* nomes dos motoristas com quebra somente entre palavras */
+  #motorista #mDriverGeral td:nth-child(1){
+    font-size:9.6px!important;
+    line-height:1.18!important;
+    white-space:normal!important;
+    overflow-wrap:normal!important;
+    word-break:normal!important;
+    padding:9px 4px!important;
+  }
+
+  /* linha final independente: TOTAL | GEO | FRANCON */
+  #motorista #mDriverGeral tr:last-child{
+    display:grid!important;
+    grid-template-columns:54% 23% 23%!important;
+    width:100%!important;
+  }
+  #motorista #mDriverGeral tr:last-child td{
+    width:auto!important;
+    min-width:0!important;
+    box-sizing:border-box!important;
+    display:flex!important;
+    align-items:center!important;
+    justify-content:center!important;
+    padding:11px 2px!important;
+    font-size:8.7px!important;
+    line-height:1!important;
+    white-space:nowrap!important;
+    overflow:hidden!important;
+    letter-spacing:-0.25px!important;
+  }
+  #motorista #mDriverGeral tr:last-child td:first-child{
+    justify-content:flex-end!important;
+    padding-right:8px!important;
+    font-size:9.5px!important;
+  }
+  #motorista #mDriverGeral tr:last-child td:nth-child(2),
+  #motorista #mDriverGeral tr:last-child td:nth-child(3){
+    border-left:2px solid #1b5877!important;
+  }
+}
+</style>
+
+<style id="motorista-mobile-v13-desembaralhado">
+@media(max-width:800px){
+  /* MOTORISTA: mais espaço e nada sobreposto */
+  #motorista #mDriverGeral table{table-layout:fixed!important}
+  #motorista #mDriverGeral th{font-size:7.2px!important;line-height:1.08!important;padding:8px 1px!important;overflow:visible!important}
+  #motorista #mDriverGeral td{font-size:9px!important;padding:8px 2px!important}
+  #motorista #mDriverGeral th:nth-child(1),#motorista #mDriverGeral td:nth-child(1){width:30%!important}
+  #motorista #mDriverGeral th:nth-child(2),#motorista #mDriverGeral td:nth-child(2){width:8%!important}
+  #motorista #mDriverGeral th:nth-child(3),#motorista #mDriverGeral td:nth-child(3){width:9%!important}
+  #motorista #mDriverGeral th:nth-child(4),#motorista #mDriverGeral td:nth-child(4){width:8%!important}
+  #motorista #mDriverGeral th:nth-child(5),#motorista #mDriverGeral td:nth-child(5){width:9%!important}
+  #motorista #mDriverGeral th:nth-child(6),#motorista #mDriverGeral td:nth-child(6){width:18%!important}
+  #motorista #mDriverGeral th:nth-child(7),#motorista #mDriverGeral td:nth-child(7){width:18%!important}
+  #motorista #mDriverGeral td:nth-child(1){font-size:9.3px!important;line-height:1.2!important;word-break:normal!important;overflow-wrap:normal!important}
+
+  /* TOTAL GERAL: sem divisória, apenas espaço real entre GEO e FRANCON */
+  #motorista #mDriverGeral tr:last-child{display:grid!important;grid-template-columns:50% 25% 25%!important;column-gap:0!important}
+  #motorista #mDriverGeral tr:last-child td{border-left:0!important;border-right:0!important;overflow:visible!important;white-space:nowrap!important;padding:11px 4px!important;font-size:8.6px!important;letter-spacing:-.25px!important}
+  #motorista #mDriverGeral tr:last-child td:first-child{justify-content:flex-end!important;padding-right:14px!important;font-size:9.4px!important}
+  #motorista #mDriverGeral tr:last-child td:nth-child(2){justify-content:center!important;padding-right:8px!important}
+  #motorista #mDriverGeral tr:last-child td:nth-child(3){justify-content:center!important;padding-left:8px!important}
+}
+</style>
+
+<style id="motorista-mobile-v14-quadros-alinhados">
+@media(max-width:800px){
+  /* Somente MOTORISTA: alinhar todos os quadros pela mesma largura e bordas */
+  #motorista{width:100%!important;max-width:100%!important;margin:0!important;padding:0!important}
+  #motorista>.section{width:100%!important;margin-left:0!important;margin-right:0!important}
+  #motorista>.grid,
+  #motorista>.card{width:100%!important;max-width:100%!important;margin-left:0!important;margin-right:0!important}
+  #motorista>.grid{grid-template-columns:repeat(2,minmax(0,1fr))!important;gap:8px!important;align-items:stretch!important}
+  #motorista>.grid>.card{width:100%!important;min-width:0!important;max-width:none!important;margin:0!important;height:100%!important}
+  #motorista>.card{padding-left:10px!important;padding-right:10px!important}
+  #motorista #mDriverMetragem,
+  #motorista #mDriverGeral{width:100%!important;max-width:100%!important;margin:0!important}
+  #motorista #mDriverMetragem table,
+  #motorista #mDriverGeral table{width:100%!important;max-width:100%!important;margin-left:0!important;margin-right:0!important}
+  #motorista #mSaldoTransporte,
+  #motorista .saldo-transporte-box{width:100%!important;max-width:100%!important;margin-left:0!important;margin-right:0!important}
+}
+</style>
 </body>
 </html>
